@@ -1063,6 +1063,9 @@ bool NVSEPlugin_Load(const NVSEInterface* nvse)
 
 	originalTESObjectBookLoadDialogFn = DetourVtable(0xD72434, UInt32(TESObjectBookOnLoadDialog));
 
+	// fix conversation editor showing [NAMELESS CREATURE] on all creatures
+	SafeWrite16(0x7682E0, 0x19EB); // skip a check which casts the speaker to TESNPC, since that fails for TESCreatures
+
 #ifdef _DEBUG
 	while(!IsDebuggerPresent())
 	{
