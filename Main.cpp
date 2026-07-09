@@ -703,12 +703,9 @@ bool NVSEPlugin_Load(const NVSEInterface* nvse)
 	// fix TESObjectLIGH form not updating the color preview rectangle
 	WriteRelCall(0x5ECFB4, UInt32(OnPostLoadLightDialog));
 
-	if (config.bPreserveTimestamps)
-	{
-		// preserve file times when saving (ShadeMe)
-		WriteRelCall(0x4D9A0E, UInt32(PreSaveStoreFileTime));
-		WriteRelCall(0x4DA14D, UInt32(PostSaveRestoreFileTime));
-	}
+	// preserve file times when saving (ShadeMe)	
+	WriteRelCall(0x4D9A0E, UInt32(PreSaveStoreFileTime));
+	WriteRelCall(0x4DA14D, UInt32(PostSaveRestoreFileTime));
 
 	if (config.bNoDirtyCellWhenNonPersistentRefsDeleted)
 	{

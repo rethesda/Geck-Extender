@@ -2395,14 +2395,23 @@ void RestoreFileTime(ModInfo* apFile)
 
 void __fastcall PreSaveStoreFileTime(ModInfo* apFile)
 {
-	SaveFileTime(apFile);
+	Console_Print("===== Start Saving %s =====", apFile->name);
+	if (config.bPreserveTimestamps)
+	{
+		SaveFileTime(apFile);
+	}
 	ThisCall(0x4DE610, apFile);
 }
 
 void __cdecl PostSaveRestoreFileTime(void* a1)
 {
 	CdeclCall(0x851810, a1);
-	RestoreFileTime(DataHandler::GetSingleton()->activeFile);
+	ModInfo* pFile = DataHandler::GetSingleton()->activeFile;
+	if (config.bPreserveTimestamps)
+	{
+		RestoreFileTime(pFile);
+	}
+	Console_Print("===== End Saving %s =====", pFile ? pFile->name : "");
 }
 
 extern HWND g_ConsoleHwnd;
